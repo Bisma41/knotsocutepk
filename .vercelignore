@@ -1,0 +1,13 @@
+# Design-canvas source and its runtime — kept in the repo, not shipped to visitors.
+*.dc.html
+support.js
+knotsocutepk-site.html
+.thumbnail
+
+# 23 MB of pasted screenshots from the design tool. Referenced nowhere.
+uploads/
+
+# Local scratch
+payload.json
+extracted-*.txt
+node_modules/
