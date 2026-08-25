@@ -35,6 +35,10 @@ const waLink = (text) => hasWA
   : 'https://instagram.com/' + CONTACT.instagram;
 const igLink = 'https://instagram.com/' + CONTACT.instagram;
 
+/* 'quoted' delivery: nothing is charged at checkout because the cost depends on
+   distance. It is agreed on WhatsApp and collected with the COD cash. */
+const DELIVERY_QUOTED = ((S.delivery && S.delivery.mode) || 'flat') === 'quoted';
+
 function write(rel, html) {
   const full = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(full), { recursive: true });
@@ -484,7 +488,9 @@ ${colour}
 
       <dl class="pdp-facts">
         <div><dt>Made to order</dt><dd>Ready in ${S.leadTimeDays} days, then posted</dd></div>
-        <div><dt>Delivery</dt><dd>${money(S.delivery.lahore)} in Lahore<br>${money(S.delivery.restOfPakistan)} elsewhere</dd></div>
+        <div><dt>Delivery</dt><dd>${DELIVERY_QUOTED
+          ? 'Depends on distance —<br>confirmed on WhatsApp'
+          : money(S.delivery.lahore) + ' in Lahore<br>' + money(S.delivery.restOfPakistan) + ' elsewhere'}</dd></div>
         <div><dt>Payment</dt><dd>Cash on delivery</dd></div>
       </dl>
     </div>
@@ -699,9 +705,15 @@ function confirmed() {
         inbox. Check spam if it is not there in a few minutes.</span></li>
       <li><span class="n">02</span><span>Your piece gets made by hand. That takes about
         ${S.leadTimeDays} days — every one is started from scratch.</span></li>
-      <li><span class="n">03</span><span>We hand it to ${esc(CONTACT.courier)} and message you
+      ${DELIVERY_QUOTED ? `<li><span class="n">03</span><span>We message you the delivery
+        charge for your address and confirm it with you before posting.</span></li>
+      <li><span class="n">04</span><span>We hand it to ${esc(CONTACT.courier)} and send you the
+        tracking number.</span></li>
+      <li><span class="n">05</span><span>Pay the courier in cash when it arrives — the pieces
+        and the delivery together.</span></li>`
+      : `<li><span class="n">03</span><span>We hand it to ${esc(CONTACT.courier)} and message you
         the tracking number.</span></li>
-      <li><span class="n">04</span><span>Pay the courier in cash when it arrives.</span></li>
+      <li><span class="n">04</span><span>Pay the courier in cash when it arrives.</span></li>`}
     </ol>
 
     <p style="font-size:14px;color:var(--muted);line-height:1.7">Anything to change — an
@@ -749,11 +761,18 @@ function policies() {
       run out, we message you before making anything.</p>
 
     <h2>Delivery</h2>
-    <ul>
+    ${DELIVERY_QUOTED ? `<p>Delivery is charged on top of the prices you see, and it depends on
+      how far the parcel has to travel. Nothing for delivery is added at checkout — once your
+      order is in, we work out the charge for your address and
+      <strong style="font-weight:500">confirm it with you on WhatsApp before we post
+      anything</strong>. You will never be surprised by it at the door.</p>
+    <p>You then pay for the pieces and the delivery together, in cash, when the parcel
+      arrives.</p>`
+    : `<ul>
       <li>Lahore — ${money(d.lahore)}</li>
       <li>Anywhere else in Pakistan — ${money(d.restOfPakistan)}</li>
       ${d.freeOver ? `<li>Free over ${money(d.freeOver)}</li>` : ''}
-    </ul>
+    </ul>`}
     <p>Parcels go by ${esc(CONTACT.courier)}. Add roughly
       <span class="review">2 to 4 working days</span> on top of the making time, depending
       on your city. You get a tracking number as soon as it ships.</p>

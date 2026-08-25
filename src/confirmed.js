@@ -26,10 +26,14 @@
   numEl.textContent = order.number;
   document.title = 'Order ' + order.number + ' — knotsocutepk';
 
+  const quoted = window.KSCcart && window.KSCcart.deliveryQuoted();
   const total = document.createElement('p');
   total.style.cssText = 'font-size:14px;color:var(--muted);margin:-10px 0 0';
-  total.textContent = 'Total ' + window.KSCmoney(order.total) +
-    ', payable in cash on delivery.' + (order.email ? ' Receipt sent to ' + order.email + '.' : '');
+  total.textContent = window.KSCmoney(order.total) + ' for the pieces' +
+    (quoted ? ', plus delivery once we have confirmed it with you. Both payable in cash '
+            + 'when the parcel arrives.'
+            : ', payable in cash on delivery.') +
+    (order.email ? ' Receipt sent to ' + order.email + '.' : '');
   numEl.insertAdjacentElement('afterend', total);
 
   if (waEl) {

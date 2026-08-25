@@ -53,8 +53,23 @@
         '<div class="line-price">' + money(l.lineTotal) + '</div></div>';
     }).join('');
 
-    const del = cart.delivery(city());
     const c = city();
+
+    if (cart.deliveryQuoted()) {
+      sumBox.innerHTML =
+        '<div class="sum-row"><span class="lab">Subtotal</span><span>' +
+          money(cart.subtotal()) + '</span></div>' +
+        '<div class="sum-row"><span class="lab">Delivery</span>' +
+          '<span style="font-family:var(--sans);letter-spacing:.02em">confirmed separately</span></div>' +
+        '<div class="sum-row total"><span class="lab">Total for the pieces</span><span>' +
+          money(cart.subtotal()) + '</span></div>' +
+        '<p class="hint" style="margin-top:14px">Delivery depends on how far the parcel ' +
+          'travels, so we confirm it with you on WhatsApp before posting. You pay the ' +
+          'pieces and the delivery together, in cash, when it arrives.</p>';
+      return;
+    }
+
+    const del = cart.delivery(c);
     sumBox.innerHTML =
       '<div class="sum-row"><span class="lab">Subtotal</span><span>' +
         money(cart.subtotal()) + '</span></div>' +
@@ -145,8 +160,9 @@
           ' — ' + money(l.lineTotal);
       }).join('\n') +
       '\n\nSubtotal: ' + money(cart.subtotal()) +
-      '\nDelivery: ' + money(cart.delivery(city())) +
-      '\nTotal: ' + money(cart.total(city())) +
+      '\nDelivery: ' + (cart.deliveryQuoted()
+        ? 'to be confirmed' : money(cart.delivery(city()))) +
+      '\nTotal for pieces: ' + money(cart.subtotal()) +
       '\n\nName: ' + form.name.value.trim() +
       '\nPhone: ' + form.phone.value.trim() +
       '\nEmail: ' + form.email.value.trim() +

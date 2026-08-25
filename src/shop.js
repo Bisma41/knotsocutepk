@@ -77,8 +77,16 @@
       return this.detailed().reduce(function (n, l) { return n + l.lineTotal; }, 0);
     },
 
-    /* Delivery is quoted from the city, and re-verified server side. */
+    /* 'quoted' mode charges nothing for delivery here — it is settled on
+       WhatsApp before dispatch. 'flat' mode uses the per-zone rates.
+       Either way the server recomputes this; never trust the browser. */
+    deliveryQuoted: function () {
+      const d = (C.settings && C.settings.delivery) || {};
+      return (d.mode || 'flat') === 'quoted';
+    },
+
     delivery: function (city) {
+      if (this.deliveryQuoted()) return 0;
       const d = (C.settings && C.settings.delivery) || {};
       const sub = this.subtotal();
       if (!sub) return 0;
@@ -229,7 +237,9 @@
 
     foot.innerHTML =
       '<div class="row"><span>Subtotal</span><span>' + money(Cart.subtotal()) + '</span></div>' +
-      '<div class="drawer-note">Delivery is added at checkout, once we know your city.</div>' +
+      '<div class="drawer-note">' + (Cart.deliveryQuoted()
+        ? 'Delivery is confirmed on WhatsApp before we post, since it depends on where you are.'
+        : 'Delivery is added at checkout, once we know your city.') + '</div>' +
       '<a class="btn-add" href="/checkout" style="text-align:center;text-decoration:none;' +
         'display:block">Checkout</a>' +
       '<a href="/shop" style="text-align:center;font-size:11px;letter-spacing:.2em;' +

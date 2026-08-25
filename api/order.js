@@ -120,9 +120,13 @@ module.exports = async function handler(req, res) {
   }
 
   /* ---------------- delivery ---------------------------------------- */
+  /* 'quoted' mode: nothing is charged for delivery here — it is agreed with
+     the customer on WhatsApp and collected with the COD cash. */
   const d = S.delivery || {};
+  const quoted = (d.mode || 'flat') === 'quoted';
   let delivery;
-  if (d.freeOver && subtotal >= d.freeOver) delivery = 0;
+  if (quoted) delivery = 0;
+  else if (d.freeOver && subtotal >= d.freeOver) delivery = 0;
   else delivery = city.toLowerCase() === 'lahore' ? (d.lahore || 0) : (d.restOfPakistan || 0);
 
   const total = subtotal + delivery;
@@ -139,10 +143,13 @@ module.exports = async function handler(req, res) {
     placedAt: new Date().toISOString(),
     customer: { name, phone, email, city, address },
     payment: method,
-    status: method === 'cod' ? 'confirmed — COD' : 'awaiting payment',
+    status: method === 'cod'
+      ? (quoted ? 'confirmed — COD, delivery to quote' : 'confirmed — COD')
+      : 'awaiting payment',
     notes,
     lines,
     subtotal, delivery, total,
+    deliveryQuoted: quoted,
     leadTimeDays: S.leadTimeDays,
     summary: lines.map((l) => l.qty + ' x ' + l.name +
       (l.colourway ? ' (' + l.colourway + ')' : '')).join('; '),

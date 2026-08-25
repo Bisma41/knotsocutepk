@@ -52,7 +52,8 @@
           lines.reduce(function (n, l) { return n + l.qty; }, 0) + ' items</span><span>' +
           money(cart.subtotal()) + '</span></div>' +
         '<div class="sum-row"><span class="lab">Delivery</span>' +
-          '<span>at checkout</span></div>' +
+          '<span>' + (cart.deliveryQuoted() ? 'confirmed separately' : 'at checkout') +
+          '</span></div>' +
         '<div class="sum-row total"><span class="lab">Subtotal</span><span>' +
           money(cart.subtotal()) + '</span></div>';
     }

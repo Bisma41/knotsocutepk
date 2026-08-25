@@ -19,14 +19,16 @@
     "currency": "PKR",
     "siteUrl": "https://knotsocutepk.vercel.app",
     "contact": {
-      "_note": "PLACEHOLDERS — you left #1, #2 and #6 blank. Fill before merging to main.",
-      "whatsapp": "",
+      "whatsapp": "923256936066",
       "instagram": "knotsocutepk",
-      "email": "notsocutepk@gmail.com",
-      "courier": "our courier"
+      "email": "nosocutepk@gmail.com",
+      "_emailNote": "CHECK THIS. Three spellings have been in play: the brand is knotsocutepk, the site said notsocutepk@gmail.com, and this is nosocutepk@gmail.com. Every receipt and order alert goes here. Send yourself a test email to confirm.",
+      "courier": "our courier",
+      "_courierNote": "Replace with TCS / Leopards / M&P / PostEx etc. once decided. Appears on the confirmation page and the policies page."
     },
     "delivery": {
-      "_note": "PLACEHOLDER RATES — you left blank #3. Confirm before merging to main.",
+      "mode": "quoted",
+      "_note": "mode 'quoted' = charge nothing for delivery at checkout; the customer is told it is confirmed on WhatsApp before dispatch. Correct while rates depend on distance, and it works with COD because the courier collects the cash anyway. Switch mode to 'flat' once you have fixed rates, and set the two figures below.",
       "lahore": 250,
       "restOfPakistan": 350,
       "freeOver": null

@@ -10,32 +10,51 @@ need to run anything on your computer.
 
 ---
 
-## Must be done before this goes live
+## Still to do before this goes live
 
-These four are blanks you left in the brief. The site is running on placeholders.
-
-| # | What | Where | Currently |
-| --- | --- | --- | --- |
-| 1 | WhatsApp number | `products.json` → `settings.contact.whatsapp` | empty → falls back to Instagram |
-| 2 | Your real email | `products.json` → `settings.contact.email` | `notsocutepk@gmail.com` — **missing the leading k?** |
-| 3 | Delivery charges | `products.json` → `settings.delivery` | **placeholder** 250 Lahore / 350 elsewhere |
-| 4 | Courier name | `products.json` → `settings.contact.courier` | "our courier" |
-
-Plus two things I could not know:
-
-| # | What | Why it matters |
+| # | What | Status |
 | --- | --- | --- |
-| 5 | **Colourways** on 5 pieces | I guessed them from your photos. Customers will order colours you may not stock. Marked `"colourwaysStatus": "REVIEW"` — delete that line once you have corrected the list. |
-| 6 | **The returns policy** | `/policies` is a promise to customers. Passages I drafted are highlighted on the page. Read it and correct the terms. |
+| 1 | WhatsApp number | **done** — `923256936066` (0325 6936066) |
+| 2 | Contact email | **CHECK THIS** — see below |
+| 3 | Delivery charges | **handled** — quoted per order, see below |
+| 4 | Courier name | waiting on you — shows as "our courier" until then |
+| 5 | **Colourways** on 5 pieces | **you must correct these.** I guessed them from your photos. Ship as-is and customers will order colours you do not stock. Marked `"colourwaysStatus": "REVIEW"` in `products.json` — delete that line once each list is right. |
+| 6 | **The returns policy** | **read `/policies`.** It is a promise to customers, and the terms I invented are highlighted pink on the page itself. |
 
-### WhatsApp number format
+### 2. The email — three spellings have been in play
 
-Country code first, digits only. No `+`, no spaces, no dashes. Drop the leading `0`.
+- your brand is **k‑not‑so‑cutepk**
+- the old site said `notsocutepk@gmail.com` (no `k`)
+- you gave me `nosocutepk@gmail.com` (no `k`, no `t`)
 
-| Your number | What to write |
-| --- | --- |
-| 0300 1234567 | `923001234567` |
-| 0321 9876543 | `923219876543` |
+I have used **exactly what you gave me**. Gmail addresses often differ from a brand
+name, so this may well be correct — but every customer receipt and every order alert
+goes to it, and a wrong address fails silently. **Send yourself a test email to that
+address before this merges.** It lives in `products.json` →
+`settings.contact.email`.
+
+### 3. Delivery — currently quoted per order
+
+You said it depends on distance, which cannot be turned into a number at checkout.
+So the site is in **`"mode": "quoted"`**: nothing is charged for delivery on the
+website, and the customer is told plainly — on the product page, in the cart, at
+checkout, on the confirmation page, in their receipt email, and on `/policies` — that
+you will confirm the delivery charge on WhatsApp before posting, and that they pay for
+the pieces and the delivery together in cash when it arrives.
+
+This works because it is cash on delivery anyway: the courier collects one amount, so
+the postage does not need to be known in advance.
+
+**When you do settle on fixed rates**, open `products.json` and change
+`settings.delivery`:
+
+```json
+"delivery": { "mode": "flat", "lahore": 250, "restOfPakistan": 350, "freeOver": null }
+```
+
+Checkout then shows delivery as its own line and adds it to the total automatically —
+nothing else to change. Set `freeOver` to a rupee amount for free delivery above it,
+or leave it `null`.
 
 ---
 
@@ -122,11 +141,15 @@ function doPost(e) {
       subject: 'Your ' + SHOP_NAME + ' order ' + orderNumber,
       body: 'Thank you — we have your order.\n\n' +
             orderNumber + '\n\n' + itemLines +
-            '\n\nSubtotal  PKR ' + o.subtotal +
-            '\nDelivery  PKR ' + o.delivery +
-            '\nTOTAL     PKR ' + o.total +
-            '\n\nPayable in cash when the parcel arrives.\n\n' +
-            'Every piece is made by hand, so it takes about ' + o.leadTimeDays +
+            '\n\nPieces    PKR ' + o.subtotal +
+            (o.deliveryQuoted
+              ? '\nDelivery  to be confirmed — it depends on how far the parcel travels.' +
+                '\n\nWe will message you the delivery charge on WhatsApp before posting, ' +
+                'and you pay for the pieces and the delivery together, in cash, when it arrives.'
+              : '\nDelivery  PKR ' + o.delivery +
+                '\nTOTAL     PKR ' + o.total +
+                '\n\nPayable in cash when the parcel arrives.') +
+            '\n\nEvery piece is made by hand, so it takes about ' + o.leadTimeDays +
             ' days before it ships. We will message you the tracking number.\n\n' +
             'Delivering to:\n' + o.customer.name + '\n' + o.customer.address + ', ' +
             o.customer.city + '\n' + o.customer.phone + '\n\n' +
