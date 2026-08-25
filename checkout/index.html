@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — knotsocutepk</title>
+<meta name="description" content="Place your order for handmade crochet, delivered across Pakistan.">
+<meta name="theme-color" content="#FAF4EC">
+<link rel="canonical" href="https://knotsocutepk.vercel.app/checkout">
+<meta name="robots" content="noindex">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="knotsocutepk">
+<meta property="og:title" content="Checkout — knotsocutepk">
+<meta property="og:description" content="Place your order for handmade crochet, delivered across Pakistan.">
+<meta property="og:url" content="https://knotsocutepk.vercel.app/checkout">
+<meta property="og:image" content="https://knotsocutepk.vercel.app/images/cat-bags.jpg">
+<meta property="og:image:alt" content="Handmade crochet by knotsocutepk">
+<meta property="og:locale" content="en_PK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Checkout — knotsocutepk">
+<meta name="twitter:description" content="Place your order for handmade crochet, delivered across Pakistan.">
+<meta name="twitter:image" content="https://knotsocutepk.vercel.app/images/cat-bags.jpg">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../src/site.css">
+
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+
+
+<header class="site-header solid">
+  <nav aria-label="Main">
+    <a class="brand" href="../">knotsocutepk</a>
+    <div class="navlinks">
+      <a href="../shop">Shop</a>
+      <a href="../#story" data-opt>Story</a>
+      <a href="https://instagram.com/knotsocutepk" target="_blank" rel="noreferrer noopener" data-opt>Instagram</a>
+      <button class="cart-btn" type="button" data-open-cart data-cart-label>
+        Cart <span class="cart-count" data-cart-count data-empty="1">0</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<div class="page page-narrow">
+  <div class="page-head"><h1>check <em>out</em></h1></div>
+
+  <div class="notice" data-empty-warn hidden>
+    Your cart is empty. <a href="../shop">Have a look at the pieces</a> first.
+  </div>
+  <div class="notice bad" data-fail hidden></div>
+
+  <div class="checkout-grid" data-checkout hidden>
+    <form id="order-form" novalidate>
+      <div class="form-grid">
+        <div class="wide">
+          <label class="inp-lab" for="f-name">Full name</label>
+          <input class="inp" id="f-name" name="name" type="text" autocomplete="name"
+                 required maxlength="90">
+          <span class="err-msg" data-err="name" hidden></span>
+        </div>
+
+        <div>
+          <label class="inp-lab" for="f-phone">Phone (WhatsApp)</label>
+          <input class="inp" id="f-phone" name="phone" type="tel" inputmode="numeric"
+                 autocomplete="tel" placeholder="0300 1234567" required maxlength="20">
+          <span class="hint">The courier calls this number before delivering.</span>
+          <span class="err-msg" data-err="phone" hidden></span>
+        </div>
+
+        <div>
+          <label class="inp-lab" for="f-email">Email</label>
+          <input class="inp" id="f-email" name="email" type="email" inputmode="email"
+                 autocomplete="email" placeholder="you@email.com" required maxlength="120">
+          <span class="hint">For your receipt.</span>
+          <span class="err-msg" data-err="email" hidden></span>
+        </div>
+
+        <div>
+          <label class="inp-lab" for="f-city">City</label>
+          <input class="inp" id="f-city" name="city" type="text" autocomplete="address-level2"
+                 list="pk-cities" required maxlength="60">
+          <datalist id="pk-cities">
+            <option>Lahore</option><option>Karachi</option><option>Islamabad</option>
+            <option>Rawalpindi</option><option>Faisalabad</option><option>Multan</option>
+            <option>Peshawar</option><option>Quetta</option><option>Sialkot</option>
+            <option>Gujranwala</option><option>Hyderabad</option><option>Bahawalpur</option>
+          </datalist>
+          <span class="err-msg" data-err="city" hidden></span>
+        </div>
+
+        <div class="wide">
+          <label class="inp-lab" for="f-addr">Delivery address</label>
+          <textarea class="inp" id="f-addr" name="address" autocomplete="street-address"
+                    required maxlength="400" placeholder="House / flat, street, area, landmark"></textarea>
+          <span class="err-msg" data-err="address" hidden></span>
+        </div>
+
+        <div class="wide">
+          <span class="inp-lab">Payment</span>
+          <div class="pay-opts">
+            <label class="pay">
+              <input type="radio" name="payment" value="cod" checked>
+              <span><span class="t">Cash on delivery</span><span class="d">Pay the courier in cash when your parcel arrives. Nothing to pay now.</span></span>
+            </label>
+          </div>
+          <span class="err-msg" data-err="payment" hidden></span>
+        </div>
+
+        <div class="wide">
+          <label class="inp-lab" for="f-notes">Order notes <span style="text-transform:none;
+            letter-spacing:0">(optional)</span></label>
+          <textarea class="inp" id="f-notes" name="notes" maxlength="400"
+            placeholder="Gift wrap, a colour you had in mind, anything else"></textarea>
+        </div>
+
+        <!-- spam trap: real people never fill this in -->
+        <div class="wide" aria-hidden="true"
+             style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+          <label for="f-website">Website</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+      </div>
+
+      <button class="btn-add" type="submit" data-submit style="margin-top:28px">
+        Place order
+      </button>
+      <p class="hint" style="text-align:center;margin-top:14px">
+        No payment is taken on this site. You pay the courier in cash on delivery.</p>
+    </form>
+
+    <aside class="summary">
+      <h2>your order</h2>
+      <div data-lines></div>
+      <div class="sum-rows" data-sum></div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="foot-top">
+    <div class="foot-tag">your wardrobe staple,<br>now in crochet.</div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <span class="h">Shop</span>
+        <a href="../shop">All pieces</a>
+        <a href="../shop?c=bags">Bags</a>
+        <a href="../shop?c=charms">Charms</a>
+      </div>
+      <div class="foot-col">
+        <span class="h">Help</span>
+        <a href="../policies">Delivery &amp; returns</a>
+        <a href="../cart">Your cart</a>
+      </div>
+      <div class="foot-col">
+        <span class="h">Contact</span>
+        <a href="https://instagram.com/knotsocutepk" target="_blank" rel="noreferrer noopener">@knotsocutepk</a>
+        <a href="mailto:notsocutepk@gmail.com">notsocutepk@gmail.com</a>
+        
+      </div>
+    </div>
+  </div>
+  <div class="wordmark" aria-hidden="true">knotsocutepk</div>
+  <div class="foot-legal">
+    <span>&copy; 2026 knotsocutepk</span><span>handmade in pakistan</span>
+  </div>
+</footer>
+
+
+<script src="../catalogue.js"></script>
+<script src="../src/shop.js" defer></script>
+<script src="../src/checkout.js" defer></script>
+</body>
+</html>

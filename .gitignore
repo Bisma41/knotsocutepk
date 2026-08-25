@@ -1,0 +1,11 @@
+# local dev + test tooling
+_dev.js
+_audit.js
+_test.js
+_dev.log
+_pdp.html
+_t.out
+payload.json
+extracted-*.txt
+node_modules/
+.vercel/

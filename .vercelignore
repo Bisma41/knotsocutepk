@@ -7,6 +7,13 @@ knotsocutepk-site.html
 # 23 MB of pasted screenshots from the design tool. Referenced nowhere.
 uploads/
 
+# Local dev + test tooling. Never needed in a deploy.
+_dev.js
+_audit.js
+_test.js
+_dev.log
+_pdp.html
+
 # Local scratch
 payload.json
 extracted-*.txt

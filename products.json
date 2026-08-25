@@ -1,0 +1,188 @@
+{
+  "_readme": [
+    "This file is the whole catalogue. Edit it here and nothing else — Vercel rebuilds",
+    "every page automatically when you commit.",
+    "",
+    "  price       whole rupees, no commas, no 'PKR'. 3000 not '3,000'.",
+    "  available   false shows the piece as sold out and disables Add to cart.",
+    "  colourways  [] means no picker is shown. Otherwise the customer must choose one.",
+    "  images      first one is the main photo and the social-share image.",
+    "  category    bags | charms | flowers  (drives the /shop filter)",
+    "",
+    "ITEMS MARKED \"REVIEW\": I guessed these colourways from your photos because the",
+    "repo does not record what yarn you stock. Correct them before launch or customers",
+    "will order colours you do not have."
+  ],
+
+  "settings": {
+    "leadTimeDays": 3,
+    "currency": "PKR",
+    "siteUrl": "https://knotsocutepk.vercel.app",
+    "contact": {
+      "_note": "PLACEHOLDERS — you left #1, #2 and #6 blank. Fill before merging to main.",
+      "whatsapp": "",
+      "instagram": "knotsocutepk",
+      "email": "notsocutepk@gmail.com",
+      "courier": "our courier"
+    },
+    "delivery": {
+      "_note": "PLACEHOLDER RATES — you left blank #3. Confirm before merging to main.",
+      "lahore": 250,
+      "restOfPakistan": 350,
+      "freeOver": null
+    },
+    "payment": {
+      "cod": true,
+      "bankTransfer": false,
+      "jazzcash": false,
+      "easypaisa": false
+    }
+  },
+
+  "products": [
+    {
+      "slug": "sweetheart-bow",
+      "idx": "01",
+      "name": "sweetheart bow",
+      "tag": "bow keychain",
+      "category": "charms",
+      "price": 350,
+      "available": true,
+      "tint": "#F7E4EA",
+      "blurb": "A fat little bow with a lobster clasp — the one that sells out first.",
+      "description": "A generous double-loop bow, worked tight so it holds its shape, finished with a lobster clasp that clips to a bag strap or a belt loop. It is the piece people ask about most, and the first one gone every drop.",
+      "colourways": ["blush pink", "cream", "black", "sage"],
+      "colourwaysStatus": "REVIEW",
+      "images": [{ "src": "images/bow-keychain.jpg", "w": 1000, "h": 1333, "pos": "center 42%", "alt": "Sweetheart bow crochet keychain in pale pink yarn with a lobster clasp" }]
+    },
+    {
+      "slug": "butter-puff",
+      "idx": "02",
+      "name": "butter puff",
+      "tag": "pastry keychain",
+      "category": "charms",
+      "price": 350,
+      "available": true,
+      "tint": "#F8EFD9",
+      "blurb": "Croissant, or a cinnamon roll if the yarn allows. Stuffed soft.",
+      "description": "A little pastry, stuffed soft enough to squish. Comes as a croissant or a cinnamon roll depending on which yarn is on the table that week — tell us which you would rather have in the order notes.",
+      "colourways": ["butter croissant", "cinnamon roll"],
+      "colourwaysStatus": "REVIEW",
+      "images": [{ "src": "images/pastry-keychain.jpg", "w": 1000, "h": 1333, "pos": "center 58%", "alt": "Butter puff crochet croissant keychain in golden yarn" }]
+    },
+    {
+      "slug": "lip-locket",
+      "idx": "03",
+      "name": "lip locket",
+      "tag": "lipstick holder",
+      "category": "charms",
+      "price": 500,
+      "available": true,
+      "tint": "#E6F0F4",
+      "blurb": "Clips inside a bag so the one thing you always lose stays put.",
+      "description": "A snug sleeve for one lipstick or a lip oil, with a clip that fastens to the inside of a bag. Worked dense so the tube does not slip out when the bag goes upside down.",
+      "colourways": ["powder blue", "cream", "blush pink"],
+      "colourwaysStatus": "REVIEW",
+      "images": [{ "src": "images/lipstick-holder.jpg", "w": 1000, "h": 1333, "pos": "center 45%", "alt": "Lip locket crochet lipstick holder that clips inside a bag" }]
+    },
+    {
+      "slug": "cloud-tote",
+      "idx": "04",
+      "name": "cloud tote",
+      "tag": "crochet bag",
+      "category": "bags",
+      "price": 3000,
+      "available": true,
+      "tint": "#EAEEE2",
+      "blurb": "The staple. Roomy enough for a book, dense enough to hold shape.",
+      "description": "The one to own if you only own one. Big enough for a paperback, a water bottle and the usual mess, worked at a tight gauge so it stands up on its own instead of slumping. Doubled handles so the weight does not dig in.",
+      "colourways": ["sage", "cream", "black"],
+      "colourwaysStatus": "REVIEW",
+      "images": [
+        { "src": "images/bag-1.jpg", "w": 1000, "h": 1333, "alt": "Cloud tote crochet bag, front view" },
+        { "src": "images/bag-2.jpg", "w": 1000, "h": 1333, "alt": "Cloud tote crochet bag, held by the handles" },
+        { "src": "images/bag-3.jpg", "w": 1000, "h": 1333, "alt": "Cloud tote crochet bag, detail of the stitch" }
+      ]
+    },
+    {
+      "slug": "forever-bloom",
+      "idx": "05",
+      "name": "forever bloom",
+      "tag": "crochet flowers",
+      "category": "flowers",
+      "price": 1000,
+      "available": true,
+      "tint": "#F3EADD",
+      "blurb": "Rose, sunflower, lavender, tulip — wrapped and ribboned. They never wilt.",
+      "description": "A single stem, wrapped in paper and tied with a ribbon, ready to hand over. Pick the bloom you want below. They do not drink, they do not drop petals, and they outlast whatever occasion you bought them for.",
+      "colourways": ["rose", "sunflower", "lavender", "tulip"],
+      "images": [
+        { "src": "images/flower-rose.jpg", "w": 1000, "h": 1333, "alt": "Crochet rose wrapped and ribboned" },
+        { "src": "images/flower-sunflower.jpg", "w": 1000, "h": 1333, "alt": "Crochet sunflower wrapped and ribboned" },
+        { "src": "images/flower-lavender.jpg", "w": 1000, "h": 1333, "alt": "Crochet lavender stems wrapped and ribboned" },
+        { "src": "images/flower-tulip.jpg", "w": 1000, "h": 1333, "alt": "Crochet tulip wrapped and ribboned" }
+      ]
+    },
+    {
+      "slug": "cobweb-wrap",
+      "idx": "06",
+      "name": "cobweb wrap",
+      "tag": "spiderweb bandana",
+      "category": "charms",
+      "price": 1200,
+      "available": true,
+      "tint": "#EBD9D9",
+      "blurb": "Ties over the hip on low-rise denim. Open web, deep red, one size.",
+      "description": "An open spiderweb triangle that ties over the hip on low-rise denim, or over the head like a bandana. One size, long ties, deliberately loose gauge so it drapes instead of sitting stiff.",
+      "colourways": [],
+      "images": [{ "src": "images/spiderweb-bandana.jpg", "w": 1000, "h": 1333, "pos": "center 62%", "alt": "Cobweb wrap crochet spiderweb bandana in deep red" }]
+    },
+    {
+      "slug": "toast-keeper",
+      "idx": "07",
+      "name": "toast keeper",
+      "tag": "cable holder",
+      "category": "charms",
+      "price": 600,
+      "available": true,
+      "tint": "#F1E3D2",
+      "blurb": "A slice of bread that eats your charger cable instead of losing it.",
+      "description": "A slice of bread with a slit down the middle. Wind the charger cable, tuck it in, and it stops being a knot at the bottom of your bag. Also works for earphones.",
+      "colourways": [],
+      "images": [{ "src": "images/toast-holder.jpg", "w": 1000, "h": 1333, "alt": "Toast keeper crochet bread slice cable holder" }]
+    },
+    {
+      "slug": "tissue-tuck",
+      "idx": "08",
+      "name": "tissue tuck",
+      "tag": "tissue pouch",
+      "category": "charms",
+      "price": 700,
+      "available": true,
+      "tint": "#F6E2E4",
+      "blurb": "Holds a travel pack of tissues, clips to a bag, has little legs.",
+      "description": "Sized to a standard travel pack of tissues, with a clip for a bag strap and two small legs that serve no purpose whatsoever. Refill it by sliding the pack in from the back.",
+      "colourways": ["blush pink", "cream"],
+      "colourwaysStatus": "REVIEW",
+      "images": [{ "src": "images/tissue-pouch.jpg", "w": 1200, "h": 1600, "alt": "Tissue tuck crochet pouch with little legs" }]
+    },
+    {
+      "slug": "ichigo-mini",
+      "idx": "09",
+      "name": "ichigo mini",
+      "tag": "strawberry bag",
+      "category": "bags",
+      "price": 2500,
+      "available": true,
+      "tint": "#F4DCDA",
+      "blurb": "A strawberry on a long crochet strap — seeded in cream, leafed in mint.",
+      "description": "A strawberry the size of a fist, seeded in cream and leafed in mint, hanging from a long crochet strap that sits at the hip. Fits a phone, a card and a lip oil, and nothing else — which is the point.",
+      "colourways": [],
+      "images": [
+        { "src": "images/ichigo-1.jpg", "w": 1200, "h": 1600, "fit": "contain", "alt": "Ichigo mini crochet strawberry bag on a long strap" },
+        { "src": "images/ichigo-2.jpg", "w": 960, "h": 1280, "fit": "contain", "alt": "Ichigo mini crochet strawberry bag, side view" },
+        { "src": "images/ichigo-3.jpg", "w": 960, "h": 1280, "fit": "contain", "alt": "Ichigo mini crochet strawberry bag, worn over the shoulder" }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://knotsocutepk.vercel.app/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://knotsocutepk.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop</loc><priority>0.6</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/policies</loc><priority>0.6</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/sweetheart-bow</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/butter-puff</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/lip-locket</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/cloud-tote</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/forever-bloom</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/cobweb-wrap</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/toast-keeper</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/tissue-tuck</loc><priority>0.8</priority></url>
+  <url><loc>https://knotsocutepk.vercel.app/shop/ichigo-mini</loc><priority>0.8</priority></url>
 </urlset>

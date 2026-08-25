@@ -1,161 +1,268 @@
-# knotsocutepk — going live
+# knotsocutepk — running the shop
 
-The site works right now with nothing configured. The three steps below turn on
-the parts that need something only you can provide.
+The site works right now. The steps below switch on the parts that need
+something only you can provide.
 
-Everything you edit lives in **one place**: the `CONFIG` block at the top of
-[`app.js`](app.js). You never need to touch `index.html` for any of this.
-
----
-
-## 1. WhatsApp orders (5 minutes) — do this first
-
-Right now every **Enquire** button sends people to your Instagram profile. That
-works, but a customer has to find the DM button and type out what they want.
-With WhatsApp they tap once and the message is already written for them:
-
-> Hi knotsocutepk! I'd like to order the ichigo mini (PKR 2,500). Is it available?
-
-To turn it on, open `app.js` and put your number in line 17:
-
-```js
-whatsapp: '923001234567',
-```
-
-**Format matters.** Country code first, digits only — no `+`, no spaces, no
-dashes. Drop the leading `0` from your mobile number:
-
-| Your number    | What to write   |
-| -------------- | --------------- |
-| 0300 1234567   | `923001234567`  |
-| 0321 9876543   | `923219876543`  |
-
-Leave it as `''` and the buttons keep pointing at Instagram, so nothing breaks
-while you decide.
+**Everything you edit day to day lives in one file: [`products.json`](products.json).**
+Prices, photos, descriptions, colourways, delivery charges, your WhatsApp number.
+Edit it on GitHub, commit, and Vercel rebuilds every page automatically. You never
+need to run anything on your computer.
 
 ---
 
-## 2. Waitlist → Google Sheet (10 minutes)
+## Must be done before this goes live
 
-Until this is set up, the form opens the visitor's email app addressed to you.
-That works, but many people abandon it. Wiring it to a Sheet means signups land
-silently in a spreadsheet you own.
+These four are blanks you left in the brief. The site is running on placeholders.
 
-### Create the sheet and script
+| # | What | Where | Currently |
+| --- | --- | --- | --- |
+| 1 | WhatsApp number | `products.json` → `settings.contact.whatsapp` | empty → falls back to Instagram |
+| 2 | Your real email | `products.json` → `settings.contact.email` | `notsocutepk@gmail.com` — **missing the leading k?** |
+| 3 | Delivery charges | `products.json` → `settings.delivery` | **placeholder** 250 Lahore / 350 elsewhere |
+| 4 | Courier name | `products.json` → `settings.contact.courier` | "our courier" |
 
-1. Make a new spreadsheet at [sheets.new](https://sheets.new). Name it
-   **knotsocutepk waitlist**.
-2. In that sheet: **Extensions → Apps Script**.
-3. Delete whatever is in the editor and paste this in:
+Plus two things I could not know:
+
+| # | What | Why it matters |
+| --- | --- | --- |
+| 5 | **Colourways** on 5 pieces | I guessed them from your photos. Customers will order colours you may not stock. Marked `"colourwaysStatus": "REVIEW"` — delete that line once you have corrected the list. |
+| 6 | **The returns policy** | `/policies` is a promise to customers. Passages I drafted are highlighted on the page. Read it and correct the terms. |
+
+### WhatsApp number format
+
+Country code first, digits only. No `+`, no spaces, no dashes. Drop the leading `0`.
+
+| Your number | What to write |
+| --- | --- |
+| 0300 1234567 | `923001234567` |
+| 0321 9876543 | `923219876543` |
+
+---
+
+## Orders → your Google Sheet (20 minutes, one time)
+
+Until this is connected, checkout shows customers a WhatsApp fallback with their
+whole order pre-filled. Nothing is lost, but you have to copy it out by hand.
+
+### 1. Make the sheet and script
+
+1. New spreadsheet at [sheets.new](https://sheets.new). Call it **knotsocutepk orders**.
+2. **Extensions → Apps Script**.
+3. Delete what's there and paste this in:
 
 ```js
+/* knotsocutepk — order book.
+   Assigns the order number, writes the row, emails you and the customer. */
+
+var YOUR_EMAIL = 'notsocutepk@gmail.com';   // <-- put YOUR real email here
+var SHOP_NAME  = 'knotsocutepk';
+
 function doPost(e) {
   var lock = LockService.getScriptLock();
-  lock.waitLock(20000);
-  try {
+  lock.waitLock(30000);                      // one order at a time, so two
+  try {                                      // customers can't get one number
+    var o = JSON.parse(e.postData.contents);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName('Waitlist') || ss.insertSheet('Waitlist');
+    var sheet = ss.getSheetByName('Orders') || ss.insertSheet('Orders');
 
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['Joined', 'Name', 'Email', 'From']);
-      sheet.getRange('A1:D1').setFontWeight('bold');
+      sheet.appendRow(['Order', 'Placed', 'Status', 'Name', 'Phone', 'Email',
+                       'City', 'Address', 'Items', 'Subtotal', 'Delivery',
+                       'Total', 'Payment', 'Notes', 'Key']);
+      sheet.getRange('A1:O1').setFontWeight('bold');
       sheet.setFrozenRows(1);
     }
 
-    var d = JSON.parse(e.postData.contents);
-    sheet.appendRow([new Date(), d.name || '', d.email || '', d.source || '']);
+    // Already filed? Return the same number instead of making a second order.
+    if (o.idempotencyKey) {
+      var keys = sheet.getRange(1, 15, Math.max(1, sheet.getLastRow()), 1).getValues();
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i][0] === o.idempotencyKey) {
+          return json({ ok: true, orderNumber: sheet.getRange(i + 1, 1).getValue(),
+                        duplicate: true });
+        }
+      }
+    }
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
+    var orderNumber = 'KSC-' + ('000' + sheet.getLastRow()).slice(-4);
+
+    sheet.appendRow([
+      orderNumber, new Date(), o.status, o.customer.name,
+      "'" + o.customer.phone,                 // leading ' keeps Sheets from
+      o.customer.email, o.customer.city,      // eating the leading digits
+      o.customer.address, o.summary, o.subtotal, o.delivery, o.total,
+      o.payment, o.notes, o.idempotencyKey
+    ]);
+
+    var itemLines = o.lines.map(function (l) {
+      return '  ' + l.qty + ' x ' + l.name +
+             (l.colourway ? ' (' + l.colourway + ')' : '') + '   PKR ' + l.lineTotal;
+    }).join('\n');
+
+    // ---- to you ----
+    MailApp.sendEmail({
+      to: YOUR_EMAIL,
+      subject: 'New order ' + orderNumber + ' — PKR ' + o.total + ' — ' + o.customer.city,
+      body: orderNumber + '\n\n' + itemLines +
+            '\n\nSubtotal  PKR ' + o.subtotal +
+            '\nDelivery  PKR ' + o.delivery +
+            '\nTOTAL     PKR ' + o.total + '  (' + o.payment + ')' +
+            '\n\n' + o.customer.name +
+            '\n' + o.customer.phone +
+            '\n' + o.customer.email +
+            '\n' + o.customer.address + ', ' + o.customer.city +
+            (o.notes ? '\n\nNotes: ' + o.notes : '') +
+            (o.clientMismatch ? '\n\n[!] The browser reported a different total (' +
+              o.clientMismatch + '). The figure above is the correct one.' : '')
+    });
+
+    // ---- to the customer ----
+    MailApp.sendEmail({
+      to: o.customer.email,
+      subject: 'Your ' + SHOP_NAME + ' order ' + orderNumber,
+      body: 'Thank you — we have your order.\n\n' +
+            orderNumber + '\n\n' + itemLines +
+            '\n\nSubtotal  PKR ' + o.subtotal +
+            '\nDelivery  PKR ' + o.delivery +
+            '\nTOTAL     PKR ' + o.total +
+            '\n\nPayable in cash when the parcel arrives.\n\n' +
+            'Every piece is made by hand, so it takes about ' + o.leadTimeDays +
+            ' days before it ships. We will message you the tracking number.\n\n' +
+            'Delivering to:\n' + o.customer.name + '\n' + o.customer.address + ', ' +
+            o.customer.city + '\n' + o.customer.phone + '\n\n' +
+            'Anything to change, just reply to this email.\n\n— ' + SHOP_NAME
+    });
+
+    return json({ ok: true, orderNumber: orderNumber });
 
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return json({ ok: false, error: String(err) });
   } finally {
     lock.releaseLock();
   }
 }
+
+function json(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 ```
 
-4. Click the **save** icon.
-5. **Deploy → New deployment**. Click the gear next to "Select type" and pick
-   **Web app**. Then set:
+4. **Change `YOUR_EMAIL` on line 4** to your real address, then save.
+5. **Deploy → New deployment**. Gear icon → **Web app**. Set:
    - **Execute as:** `Me`
-   - **Who has access:** `Anyone`  ← must be *Anyone*, not "Anyone with Google account"
-6. **Deploy**. Google will ask you to authorise it — click through
-   *Advanced → Go to (unsafe)* if it warns you. It's warning you about your own
-   script.
-7. Copy the **Web app URL**. It ends in `/exec`.
+   - **Who has access:** `Anyone` ← must be *Anyone*, not "Anyone with Google account"
+6. **Deploy**, authorise it (click *Advanced → Go to (unsafe)* — it's warning you
+   about your own script), and copy the **Web app URL**. It ends in `/exec`.
 
-### Point the site at it
+### 2. Give the URL to Vercel
 
-Paste that URL into `app.js` line 29:
+This one does **not** go in `products.json` — it stays server-side so nobody can
+spam your order book directly.
 
-```js
-sheetEndpoint: 'https://script.google.com/macros/s/AKfycb..../exec',
-```
+1. Vercel → your project → **Settings → Environment Variables**
+2. Add: name `ORDER_SHEET_URL`, value = the `/exec` URL, all environments
+3. **Redeploy** (Deployments → latest → ⋯ → Redeploy). Environment variables only
+   apply to new builds.
 
-Then test it: load your site, submit the form with your own email, and check the
-sheet. A row should appear within a second or two.
+### 3. Test it
+
+Place a real order on the live site with your own email. Within a few seconds you
+should get: a row in the sheet, an email to you, and a receipt to the customer.
 
 > **If you ever edit the Apps Script**, you must **Deploy → Manage deployments →
-> edit → Version: New version → Deploy** for the change to take effect. Saving
-> alone does nothing to the live URL.
+> edit (pencil) → Version: New version → Deploy**. Saving alone does not change
+> the live URL.
+
+### Worth knowing: the email limit
+
+A free Gmail account can send **100 emails a day** through Apps Script. Each order
+sends two — one to you, one to the customer. So **about 50 orders a day** before
+emails start silently failing. Orders still get written to the sheet either way.
+If you ever get near that, tell me and I'll move email onto a proper sender.
 
 ---
 
-## 3. The members-only gate — currently OFF
+## The waitlist
 
-Your original design blocked the whole site behind a "Follow us to come inside"
-wall: visitors had to open Instagram, stay there 8 seconds, come back, and click
-*Enter the shop* before they could see a single product.
+Separate from orders. Currently the form opens the visitor's email app addressed
+to you. To collect signups into a sheet instead, follow the same Apps Script
+pattern with a simpler script, then set `window.KSC_WAITLIST_ENDPOINT` — ask me
+and I'll wire it up in ten minutes.
 
-I've turned it **off**, because it asks people to follow before they've seen
-anything worth following, and most first-time visitors leave instead. Your
-Instagram traffic already follows you; the gate mostly blocks new customers who
-found you some other way.
+---
 
-If you want it back, set line 37 of `app.js`:
+## Adding, removing and changing pieces
 
-```js
-followGate: true,
+All in `products.json`. Commit the change and the whole site rebuilds — the shop
+grid, the product page, the home page, the sitemap and the structured data.
+
+**A new piece** — copy an existing block and change the fields:
+
+```json
+{
+  "slug": "cherry-clip",
+  "idx": "10",
+  "name": "cherry clip",
+  "tag": "hair clip",
+  "category": "charms",
+  "price": 400,
+  "available": true,
+  "tint": "#F7E4EA",
+  "blurb": "One line for the home page.",
+  "description": "The longer version for the product page.",
+  "colourways": ["red", "cream"],
+  "images": [
+    { "src": "images/cherry-clip.jpg", "w": 1000, "h": 1333,
+      "alt": "A crochet cherry hair clip in red yarn" }
+  ]
+}
 ```
 
-A middle path worth considering: leave it off until a drop sells out, then turn
-it on for the next launch when there's real scarcity to gate.
+Upload the photo to `images/` first. **The build fails on purpose if a photo is
+missing**, rather than publishing a page with a hole in it.
+
+- `slug` becomes the web address, so `cherry-clip` → `/shop/cherry-clip`.
+  Lowercase letters, numbers and dashes only.
+- `w` and `h` are the photo's real pixel dimensions. Getting them right stops the
+  page jumping around while images load.
+- **Sold out:** set `"available": false`. The piece stays visible with a *sold out*
+  badge and Add-to-cart switches off.
+- **No colourway choice:** use `"colourways": []`.
 
 ---
 
-## What I'd fix next
+## How the site is put together
 
-Two things I noticed but didn't change, because they're yours to decide:
+```
+products.json      the catalogue — the only file you normally edit
+build.js           generates every page from it. No dependencies.
+src/
+  site.css         all styling, one cached file across 15 pages
+  shop.js          cart, drawer, money formatting — on every page
+  home.js  shopfilter.js  pdp.js  cartpage.js  checkout.js  confirmed.js
+api/order.js       recomputes every price server-side, then files the order
+images/            all photos
+```
 
-**The contact email may have a typo.** The footer says
-`notsocutepk@gmail.com` — no `k` at the front, while your brand is *k*notsocutepk.
-If that's not a real inbox you're monitoring, customer emails are vanishing. It
-appears in two places: the footer link in `index.html`, and `CONFIG.email` in
-`app.js`.
+Generated by `build.js` — **don't hand-edit these**, your changes get overwritten
+on the next build: `index.html`, `shop/`, `cart/`, `checkout/`, `order/`,
+`policies/`, `catalogue.js`, `sitemap.xml`.
 
-**`uploads/` is 23 MB of nothing.** Thirty-odd pasted screenshots from the design
-tool, referenced by no page. I've excluded them from deploys via `.vercelignore`,
-so visitors never download them — but they still bloat the repo. Safe to delete
-once you've checked none are photos you don't have elsewhere.
+**Why prices are recomputed on the server:** the cart lives in the browser, where
+anyone can edit it. `api/order.js` throws away whatever totals the browser claims
+and recalculates from `products.json`. A customer who edits their cart to say
+"PKR 1" still gets charged the real amount.
 
 ---
 
-## Files in this project
+## What is deliberately not built yet
 
-| File | What it is |
-| --- | --- |
-| `index.html` | The whole site. All content and styling. |
-| `app.js` | Behaviour + **the CONFIG block you edit**. |
-| `favicon.svg` | The little strawberry in the browser tab. |
-| `images/` | All 35 product and lifestyle photos. |
-| `vercel.json` | Caching and security headers. |
-| `robots.txt`, `sitemap.xml` | So Google can index the site. |
-| `.vercelignore` | Keeps design files and `uploads/` out of the deploy. |
-| `Knotsocutepk Landing v4.dc.html` | Your original design-canvas file. Kept as the design source of truth — not part of the live site. |
-| `support.js` | Runtime the `.dc.html` file needs. Not part of the live site. |
-| `knotsocutepk-site.html` | The old 2.9 MB export. Superseded by `index.html`. |
+Noted so they're easy to add later, not forgotten: customer accounts, an order
+tracking page, discount codes, reviews, a wishlist, stock counts, and online card
+payment.
+
+On **card payment** — Stripe and PayPal do not work for receiving money in
+Pakistan. When you want cards, the options are Safepay or PayFast, and both need a
+registered business with an NTN. `api/order.js` has the payment step isolated so
+that slots in without rebuilding checkout.
