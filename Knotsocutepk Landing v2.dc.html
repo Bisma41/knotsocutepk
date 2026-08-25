@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Jost:wght@200;300;400;500&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#FAF4EC; }
+  * { box-sizing:border-box; }
+  a { color:#2B2A27; text-decoration:none; }
+  a:hover { color:#E38A9A; }
+  ::selection { background:#F4C6D3; }
+  @keyframes mq { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  @keyframes rise { from { opacity:0; transform:translateY(120%) rotate(2deg); } to { opacity:1; transform:none; } }
+  @keyframes fade { from { opacity:0; } to { opacity:1; } }
+  @keyframes zoomIn { from { opacity:0; clip-path:inset(0 0 100% 0); transform:scale(1.08); } to { opacity:1; clip-path:inset(0 0 0 0); transform:scale(1); } }
+  .rail::-webkit-scrollbar { height:2px; }
+  .rail::-webkit-scrollbar-thumb { background:rgba(43,42,39,0.25); }
+  input::placeholder { color:rgba(250,244,236,0.5); }
+</style>
+</helmet>
+
+<div style="background:#FAF4EC; color:#2B2A27; font-family:Jost, system-ui, sans-serif; font-weight:300; overflow-x:hidden; position:relative;">
+
+  <div style="position:fixed; inset:0; z-index:200; pointer-events:none; opacity:{{ grainOpacity }}; background:{{ grainBg }}; mix-blend-mode:multiply;"></div>
+
+  <header style="position:fixed; top:0; left:0; right:0; z-index:100; mix-blend-mode:difference;">
+    <nav style="padding:26px clamp(18px,3vw,44px); display:flex; align-items:center; justify-content:space-between; gap:20px; color:#FAF4EC;">
+      <a href="#top" style="font-family:Jost, sans-serif; font-weight:400; font-size:12px; letter-spacing:0.34em; text-transform:uppercase; color:#FAF4EC;">knotsocutepk</a>
+      <div style="display:flex; align-items:center; gap:clamp(16px,2.4vw,34px); font-size:11px; letter-spacing:0.2em; text-transform:uppercase;">
+        <a href="#shop" style="color:#FAF4EC;">Shop</a>
+        <a href="#story" style="color:#FAF4EC;">Story</a>
+        <a href="#waitlist" style="color:#FAF4EC;">Waitlist</a>
+        <a href="https://instagram.com/knotsocutepk" target="_blank" rel="noreferrer" style="color:#FAF4EC;">Instagram</a>
+      </div>
+    </nav>
+  </header>
+
+  <section id="top" style="position:relative; min-height:100svh; display:grid; grid-template-columns:repeat(12,1fr); align-items:end; padding:0 0 clamp(28px,4vh,56px);">
+    <div style="position:absolute; top:0; right:0; width:min(52vw,760px); height:100%; overflow:hidden; animation:zoomIn 1.5s cubic-bezier(0.16,1,0.3,1) both;">
+      <div style="width:100%; height:100%; background:repeating-linear-gradient(118deg,#E7DCCB 0 14px,#F1E7D9 14px 28px);"></div>
+      <span style="position:absolute; top:50%; right:clamp(14px,2vw,26px); transform:translateY(-50%); writing-mode:vertical-rl; font-family:ui-monospace, monospace; font-size:10px; letter-spacing:0.16em; color:rgba(43,42,39,0.5); white-space:nowrap;">HERO — work-in-progress crop · yarn, hook, low warm light</span>
+      <div style="position:absolute; inset:0; background:linear-gradient(200deg, rgba(43,42,39,0.42) 0%, rgba(43,42,39,0) 46%);"></div>
+    </div>
+
+    <div style="position:absolute; left:0; top:0; bottom:0; width:min(44vw,560px); background:radial-gradient(120% 90% at 0% 30%, rgba(244,198,211,0.55) 0%, rgba(250,244,236,0) 68%);"></div>
+
+    <div style="grid-column:1 / span 12; position:relative; padding:0 clamp(18px,3vw,44px);">
+      <div style="overflow:hidden; margin-bottom:clamp(10px,1.6vh,22px);">
+        <div style="display:flex; align-items:baseline; gap:14px; animation:rise 1s cubic-bezier(0.16,1,0.3,1) 0.15s both;">
+          <span style="font-family:'Baloo 2', sans-serif; font-weight:600; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:#E38A9A;">drop 01</span>
+          <span style="height:1px; flex:0 0 clamp(40px,8vw,140px); background:rgba(43,42,39,0.25);"></span>
+          <span style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#6b695f;">est. karachi · made by hand</span>
+        </div>
+      </div>
+      <h1 style="margin:0; font-family:'Playfair Display', serif; font-weight:400; letter-spacing:-0.05em; line-height:0.82;">
+        <span style="display:block; overflow:hidden;"><span style="display:block; font-size:clamp(58px,13.2vw,206px); animation:rise 1.15s cubic-bezier(0.16,1,0.3,1) 0.25s both;">handmade</span></span>
+        <span style="display:block; overflow:hidden;"><span style="display:block; font-style:italic; font-size:clamp(58px,13.2vw,206px); padding-left:0.06em; animation:rise 1.15s cubic-bezier(0.16,1,0.3,1) 0.38s both;">knots</span></span>
+      </h1>
+      <div style="margin-top:clamp(22px,3.4vh,44px); display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:clamp(20px,3vw,56px); align-items:end; max-width:min(100%,1000px); animation:fade 1.2s ease 0.75s both;">
+        <p style="margin:0; font-size:clamp(15px,1.1vw,18px); line-height:1.6; color:#57554d; max-width:400px; text-wrap:pretty;">Bags, charms and tiny treasures looped one stitch at a time. Small batches, no reruns — when the yarn is gone, the colourway is gone.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a href="#shop" style="padding:16px 34px; border-radius:2px; background:#2B2A27; color:#FAF4EC; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; transition:background .4s ease, transform .4s cubic-bezier(0.16,1,0.3,1);" style-hover="background:#E38A9A; color:#FAF4EC; transform:translateY(-2px);">Shop the drop</a>
+          <a href="#waitlist" style="padding:16px 30px; border-radius:2px; border:1px solid rgba(43,42,39,0.28); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; transition:border-color .4s ease, color .4s ease;" style-hover="border-color:#E38A9A; color:#E38A9A;">Waitlist</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="overflow:hidden; background:#2B2A27; color:#FAF4EC; padding:14px 0;">
+    <div style="display:flex; width:max-content; animation:mq 42s linear infinite; white-space:nowrap; font-size:11px; letter-spacing:0.34em; text-transform:uppercase;">
+      <span style="padding-right:32px;">handmade &nbsp;—&nbsp; small batch &nbsp;—&nbsp; made with love &nbsp;—&nbsp; one of one &nbsp;—&nbsp; knotted in karachi &nbsp;—&nbsp; handmade &nbsp;—&nbsp; small batch &nbsp;—&nbsp; made with love &nbsp;—&nbsp; one of one &nbsp;—&nbsp; knotted in karachi &nbsp;—&nbsp;</span>
+      <span style="padding-right:32px;">handmade &nbsp;—&nbsp; small batch &nbsp;—&nbsp; made with love &nbsp;—&nbsp; one of one &nbsp;—&nbsp; knotted in karachi &nbsp;—&nbsp; handmade &nbsp;—&nbsp; small batch &nbsp;—&nbsp; made with love &nbsp;—&nbsp; one of one &nbsp;—&nbsp; knotted in karachi &nbsp;—&nbsp;</span>
+    </div>
+  </div>
+
+  <section id="shop" style="padding:clamp(72px,10vw,140px) 0 clamp(64px,8vw,110px);">
+    <div data-reveal="" style="padding:0 clamp(18px,3vw,44px); display:flex; align-items:flex-end; justify-content:space-between; gap:28px; flex-wrap:wrap; margin-bottom:clamp(36px,5vw,68px);">
+      <h2 style="margin:0; font-family:'Playfair Display', serif; font-weight:400; font-size:clamp(34px,5.4vw,84px); line-height:0.9; letter-spacing:-0.04em;">the <span style="font-style:italic;">little</span> things</h2>
+      <div style="display:flex; align-items:baseline; gap:16px; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#6b695f;">
+        <span>05 pieces</span><span style="width:36px; height:1px; background:rgba(43,42,39,0.25);"></span><span>drag to explore →</span>
+      </div>
+    </div>
+    <div class="rail" style="display:flex; gap:clamp(14px,1.6vw,26px); overflow-x:auto; scroll-snap-type:x mandatory; padding:0 clamp(18px,3vw,44px) 28px;">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="5">
+        <article data-reveal="" style="flex:0 0 clamp(230px,24vw,340px); scroll-snap-align:start;">
+          <div style="position:relative; aspect-ratio:3/4; overflow:hidden; border-radius:3px; transition:transform .6s cubic-bezier(0.16,1,0.3,1); background:{{ p.bg }};" style-hover="transform:translateY(-10px);">
+            <span style="position:absolute; top:16px; left:16px; font-family:ui-monospace, monospace; font-size:10px; letter-spacing:0.14em; color:rgba(43,42,39,0.5);">{{ p.idx }}</span>
+            <span style="position:absolute; inset:auto 16px 16px; font-family:ui-monospace, monospace; font-size:10px; line-height:1.5; color:rgba(43,42,39,0.42);">{{ p.shot }}</span>
+          </div>
+          <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-top:18px; border-top:1px solid rgba(43,42,39,0.16); margin-top:18px;">
+            <span style="font-family:'Playfair Display', serif; font-size:clamp(19px,1.5vw,25px); letter-spacing:-0.02em;">{{ p.name }}</span>
+            <span style="font-family:ui-monospace, monospace; font-size:11px; letter-spacing:0.06em; color:#6b695f; white-space:nowrap;">{{ p.price }}</span>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="story" style="background:#7C8A6B; color:#FAF4EC; padding:clamp(80px,10vw,150px) clamp(18px,3vw,44px);">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(40px,6vw,100px); align-items:start; max-width:1560px; margin:0 auto;">
+      <div data-reveal="" style="position:sticky; top:clamp(90px,14vh,150px);">
+        <div style="font-size:11px; letter-spacing:0.24em; text-transform:uppercase; opacity:0.6; margin-bottom:clamp(20px,3vw,36px);">02 — the story</div>
+        <h2 style="margin:0 0 clamp(22px,3vw,36px); font-family:'Playfair Display', serif; font-weight:400; font-size:clamp(32px,4.6vw,70px); line-height:0.94; letter-spacing:-0.04em;">every stitch is<br /><span style="font-style:italic;">somebody's hands.</span></h2>
+        <p style="margin:0 0 clamp(26px,3vw,40px); font-size:clamp(15px,1.05vw,18px); line-height:1.75; opacity:0.84; max-width:440px; text-wrap:pretty;">One hook, one skein, a very small table. Everything is still made that way — at home, in Pakistan, in batches counted on two hands. There is no factory and no second run.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:20px; max-width:440px; border-top:1px solid rgba(250,244,236,0.28); padding-top:24px;">
+          <div><div style="font-family:'Playfair Display', serif; font-size:34px; line-height:1;">100%</div><div style="font-size:11px; letter-spacing:0.16em; text-transform:uppercase; opacity:0.6; margin-top:6px;">hand-looped</div></div>
+          <div><div style="font-family:'Playfair Display', serif; font-size:34px; line-height:1;">1 of 1</div><div style="font-size:11px; letter-spacing:0.16em; text-transform:uppercase; opacity:0.6; margin-top:6px;">colourways</div></div>
+          <div><div style="font-family:'Playfair Display', serif; font-size:34px; line-height:1;">3 days</div><div style="font-size:11px; letter-spacing:0.16em; text-transform:uppercase; opacity:0.6; margin-top:6px;">made to order</div></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:clamp(16px,2vw,28px);">
+        <div data-reveal="" style="aspect-ratio:4/5; border-radius:3px; background:repeating-linear-gradient(118deg,rgba(250,244,236,0.14) 0 14px,rgba(250,244,236,0.24) 14px 28px); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:ui-monospace, monospace; font-size:11px; color:rgba(250,244,236,0.72);">hands crocheting — close crop</span>
+        </div>
+        <div data-reveal="" style="aspect-ratio:1; width:min(70%,420px); margin-left:auto; border-radius:3px; background:repeating-linear-gradient(118deg,rgba(250,244,236,0.14) 0 14px,rgba(250,244,236,0.24) 14px 28px); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:ui-monospace, monospace; font-size:11px; color:rgba(250,244,236,0.72);">finished bag on stool</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
+    <a href="#shop" style="position:relative; min-height:clamp(340px,52vh,600px); overflow:hidden; display:flex; align-items:flex-end; padding:clamp(26px,3vw,52px); background:repeating-linear-gradient(118deg,#E7DCCB 0 14px,#F1E7D9 14px 28px);" style-hover="color:#FAF4EC;">
+      <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(43,42,39,0.6), rgba(43,42,39,0) 70%); transition:opacity .6s ease;"></div>
+      <div style="position:relative; display:flex; align-items:baseline; justify-content:space-between; width:100%; gap:16px; flex-wrap:wrap; color:#FAF4EC;">
+        <span style="font-family:'Playfair Display', serif; font-style:italic; font-size:clamp(30px,3.6vw,56px); letter-spacing:-0.03em;">Bags</span>
+        <span style="font-size:11px; letter-spacing:0.22em; text-transform:uppercase; opacity:0.85; white-space:nowrap;">01 — shop</span>
+      </div>
+    </a>
+    <a href="#shop" style="position:relative; min-height:clamp(340px,52vh,600px); overflow:hidden; display:flex; align-items:flex-end; padding:clamp(26px,3vw,52px); background:repeating-linear-gradient(118deg,#F0BCCB 0 14px,#F7D5DE 14px 28px);" style-hover="color:#FAF4EC;">
+      <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(43,42,39,0.58), rgba(43,42,39,0) 70%);"></div>
+      <div style="position:relative; display:flex; align-items:baseline; justify-content:space-between; width:100%; gap:16px; flex-wrap:wrap; color:#FAF4EC;">
+        <span style="font-family:'Playfair Display', serif; font-style:italic; font-size:clamp(30px,3.6vw,56px); letter-spacing:-0.03em;">Charms &amp; Keychains</span>
+        <span style="font-size:11px; letter-spacing:0.22em; text-transform:uppercase; opacity:0.85; white-space:nowrap;">02 — shop</span>
+      </div>
+    </a>
+  </section>
+
+  <section id="waitlist" style="background:#2B2A27; color:#FAF4EC; padding:clamp(88px,11vw,170px) clamp(18px,3vw,44px);">
+    <div data-reveal="" style="max-width:1000px; margin:0 auto;">
+      <div style="font-size:11px; letter-spacing:0.24em; text-transform:uppercase; opacity:0.5; margin-bottom:clamp(20px,3vw,34px);">04 — the list</div>
+      <h2 style="margin:0 0 clamp(28px,4vw,52px); font-family:'Playfair Display', serif; font-weight:400; font-size:clamp(38px,7vw,110px); line-height:0.9; letter-spacing:-0.045em;">the hype <span style="font-style:italic; color:#F4C6D3;">is real.</span></h2>
+      <sc-if value="{{ subscribed }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top:1px solid rgba(250,244,236,0.3); padding-top:32px; animation:fade .6s ease both;">
+          <div style="font-family:'Playfair Display', serif; font-style:italic; font-size:clamp(24px,2.6vw,38px); margin-bottom:10px;">you're on the list.</div>
+          <div style="font-size:14px; opacity:0.6; letter-spacing:0.04em;">We'll email the moment drop 02 goes live.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSubscribed }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:clamp(18px,2.4vw,34px); align-items:end; border-top:1px solid rgba(250,244,236,0.22); padding-top:clamp(26px,3vw,40px);">
+          <label style="display:block;">
+            <span style="display:block; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.5; margin-bottom:12px;">Name</span>
+            <input value="{{ nameVal }}" onChange="{{ onName }}" placeholder="first name" style="width:100%; padding:10px 0; border:none; border-bottom:1px solid rgba(250,244,236,0.35); background:transparent; color:#FAF4EC; font-family:Jost, sans-serif; font-weight:300; font-size:17px; outline:none; transition:border-color .4s ease;" style-focus="border-bottom-color:#F4C6D3;" />
+          </label>
+          <label style="display:block;">
+            <span style="display:block; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.5; margin-bottom:12px;">Email</span>
+            <input value="{{ emailVal }}" onChange="{{ onEmail }}" placeholder="you@email.com" style="width:100%; padding:10px 0; border:none; border-bottom:1px solid rgba(250,244,236,0.35); background:transparent; color:#FAF4EC; font-family:Jost, sans-serif; font-weight:300; font-size:17px; outline:none; transition:border-color .4s ease;" style-focus="border-bottom-color:#F4C6D3;" />
+          </label>
+          <button onClick="{{ onSubmit }}" style="padding:16px 34px; border:1px solid #FAF4EC; background:transparent; color:#FAF4EC; font-family:Jost, sans-serif; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; border-radius:2px; transition:background .4s ease, color .4s ease, border-color .4s ease;" style-hover="background:#F4C6D3; border-color:#F4C6D3; color:#2B2A27;">Join the list</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="padding:clamp(72px,9vw,130px) clamp(18px,3vw,44px);">
+    <div data-reveal="" style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:clamp(30px,4vw,52px);">
+      <h2 style="margin:0; font-family:'Playfair Display', serif; font-weight:400; font-style:italic; font-size:clamp(30px,4vw,60px); letter-spacing:-0.035em;">follow the knots</h2>
+      <a href="https://instagram.com/knotsocutepk" target="_blank" rel="noreferrer" style="font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:#E38A9A;">@knotsocutepk →</a>
+    </div>
+    <div data-reveal="" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:clamp(10px,1.2vw,18px);">
+      <sc-for list="{{ ugc }}" as="u" hint-placeholder-count="6">
+        <a href="https://instagram.com/knotsocutepk" target="_blank" rel="noreferrer" style="aspect-ratio:1; overflow:hidden; border-radius:2px; display:flex; align-items:flex-end; padding:12px; transition:opacity .45s ease; background:{{ u.bg }};" style-hover="opacity:0.72;">
+          <span style="font-family:ui-monospace, monospace; font-size:10px; color:rgba(43,42,39,0.42);">{{ u.label }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer id="contact" style="background:#FAF4EC; border-top:1px solid rgba(43,42,39,0.14); padding:clamp(48px,6vw,80px) clamp(18px,3vw,44px) 0; overflow:hidden;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:clamp(24px,4vw,60px); flex-wrap:wrap; margin-bottom:clamp(40px,6vw,90px);">
+      <div style="font-family:'Playfair Display', serif; font-style:italic; font-size:clamp(20px,2vw,30px); letter-spacing:-0.02em; max-width:420px; line-height:1.25;">your wardrobe staple,<br />now in crochet.</div>
+      <div style="display:flex; gap:clamp(28px,5vw,80px); flex-wrap:wrap; font-size:12px; letter-spacing:0.06em;">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#9c9a92;">Shop</span>
+          <a href="#shop">Bags</a><a href="#shop">Charms</a><a href="#waitlist">Waitlist</a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:#9c9a92;">Contact</span>
+          <a href="https://instagram.com/knotsocutepk" target="_blank" rel="noreferrer">@knotsocutepk</a>
+          <a href="mailto:notsocutepk@gmail.com">notsocutepk@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div style="font-family:'Playfair Display', serif; font-weight:400; font-size:clamp(46px,15.5vw,260px); line-height:0.74; letter-spacing:-0.05em; white-space:nowrap; color:#2B2A27;">knotsocutepk</div>
+    <div style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:20px 0 24px; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#9c9a92;">
+      <span>© 2026 knotsocutepk</span><span>handmade in pakistan</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;revealOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Texture&quot;}}">
+class Component extends DCLogic {
+  state = { subscribed: false, name: "", email: "" };
+
+  componentDidMount() {
+    if (this.props.revealOnScroll === false) return;
+    this.seen = new WeakSet();
+    this.tracked = [];
+    this.pending = [];
+
+    const reveal = (el) => { el.style.opacity = "1"; el.style.transform = "none"; };
+    const loop = () => {
+      const h = window.innerHeight;
+      this.pending = this.pending.filter((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < h * 0.92 && r.bottom > 0) { reveal(el); return false; }
+        return true;
+      });
+      this.rafId = requestAnimationFrame(loop);
+    };
+    this.queue = () => {};
+    this.rafId = requestAnimationFrame(loop);
+
+    const scan = () => {
+      document.querySelectorAll("[data-reveal]").forEach((el, i) => {
+        if (this.seen.has(el)) return;
+        this.seen.add(el);
+        this.tracked.push(el);
+        this.pending.push(el);
+        el.style.opacity = "0";
+        el.style.transform = "translateY(34px)";
+        const d = (i % 5) * 90;
+        el.style.transition = "opacity .9s cubic-bezier(0.16,1,0.3,1) " + d + "ms, transform .9s cubic-bezier(0.16,1,0.3,1) " + d + "ms";
+      });
+      this.queue();
+    };
+    scan();
+    addEventListener("scroll", this.queue, { passive: true });
+    addEventListener("resize", this.queue);
+    this.mo = new MutationObserver(scan);
+    this.mo.observe(document.body, { childList: true, subtree: true });
+    this.stop = setTimeout(() => this.mo.disconnect(), 20000);
+  }
+
+  componentWillUnmount() {
+    if (this.queue) {
+      removeEventListener("scroll", this.queue);
+      removeEventListener("resize", this.queue);
+    }
+    cancelAnimationFrame(this.rafId);
+    if (this.mo) this.mo.disconnect();
+    clearTimeout(this.stop);
+    (this.tracked || []).forEach((el) => {
+      el.style.opacity = "";
+      el.style.transform = "";
+      el.style.transition = "";
+    });
+  }
+
+  renderVals() {
+    const products = [
+      { idx: "01", name: "bow keychain", price: "PKR 350", bg: "repeating-linear-gradient(118deg,#F0BCCB 0 12px,#F7D5DE 12px 24px)", shot: "bow charm — plain bg, hard light" },
+      { idx: "02", name: "pastry keychain", price: "PKR 350", bg: "repeating-linear-gradient(118deg,#EEDA9A 0 12px,#F6E8BB 12px 24px)", shot: "pastry charm — 3/4 angle" },
+      { idx: "03", name: "lipstick holder", price: "PKR 500", bg: "repeating-linear-gradient(118deg,#B8D1DC 0 12px,#D3E2EA 12px 24px)", shot: "holder + lipstick, shallow dof" },
+      { idx: "04", name: "crochet bag", price: "PKR 1,000", bg: "repeating-linear-gradient(118deg,#D6DCCA 0 12px,#E6EADD 12px 24px)", shot: "bag hung — long shadow" },
+      { idx: "05", name: "rose & sunflower", price: "PKR 1,000", bg: "repeating-linear-gradient(118deg,#E7DCCB 0 12px,#F1E7D9 12px 24px)", shot: "flowers — overhead, warm" }
+    ];
+    const ugc = [
+      { label: "reel still", bg: "repeating-linear-gradient(118deg,#F0BCCB 0 10px,#F7D5DE 10px 20px)" },
+      { label: "flatlay", bg: "repeating-linear-gradient(118deg,#E7DCCB 0 10px,#F1E7D9 10px 20px)" },
+      { label: "in hand", bg: "repeating-linear-gradient(118deg,#D6DCCA 0 10px,#E6EADD 10px 20px)" },
+      { label: "packaging", bg: "repeating-linear-gradient(118deg,#EEDA9A 0 10px,#F6E8BB 10px 20px)" },
+      { label: "detail", bg: "repeating-linear-gradient(118deg,#B8D1DC 0 10px,#D3E2EA 10px 20px)" },
+      { label: "studio", bg: "repeating-linear-gradient(118deg,#F0BCCB 0 10px,#F7D5DE 10px 20px)" }
+    ];
+    return {
+      products, ugc,
+      grainOpacity: this.props.grain === false ? 0 : 0.05,
+      grainBg: "radial-gradient(rgba(43,42,39,0.9) 0.5px, transparent 0.5px) 0 0/3px 3px, radial-gradient(rgba(43,42,39,0.7) 0.5px, transparent 0.5px) 1.5px 1.5px/4px 4px",
+      subscribed: this.state.subscribed,
+      notSubscribed: !this.state.subscribed,
+      nameVal: this.state.name,
+      emailVal: this.state.email,
+      onName: (e) => this.setState({ name: e.target.value }),
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onSubmit: () => this.setState({ subscribed: true })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
